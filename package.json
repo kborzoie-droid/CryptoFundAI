@@ -1,0 +1,9 @@
+{
+  "name": "cryptofundai",
+  "version": "1.0.0",
+  "description": "Crypto Fund AI Mobile App",
+  "main": "index.html",
+  "scripts": {
+    "start": "echo Crypto Fund AI"
+  }
+}
