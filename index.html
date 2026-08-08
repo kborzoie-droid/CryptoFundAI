@@ -1,56 +1,200 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title><link rel="manifest" href="manifest.json"> Crypto Fund AI</title>
-
+<title>Crypto Fund AI</title>
 <style>
-body {<script src="app.js"></script>
-
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js');
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#0b1020;
+  color:#fff;
 }
-</script>
-    font-family: Arial, sans-serif;
-    direction: rtl;
-    text-align: center;
-    padding: 30px;
-    background: #f5f5f5;
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
 }
-
-.box {
-    background: white;
-    border-radius: 15px;
-    padding: 20px;
-    margin-top: 30px;
+h1{
+  text-align:center;
+  margin-bottom:5px;
+}
+.subtitle{
+  text-align:center;
+  color:#aab3c5;
+  margin-bottom:25px;
+}
+.status{
+  background:#132238;
+  border:1px solid #24405f;
+  border-radius:12px;
+  padding:15px;
+  margin-bottom:20px;
+  text-align:center;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+.card{
+  background:#121a2b;
+  border:1px solid #25334d;
+  border-radius:14px;
+  padding:18px;
+}
+.card h3{
+  margin-top:0;
+}
+.value{
+  font-size:24px;
+  font-weight:bold;
+  margin-top:10px;
+}
+.green{
+  color:#35d07f;
+}
+.yellow{
+  color:#ffd166;
+}
+.blue{
+  color:#5da9ff;
+}
+.section{
+  margin-top:25px;
+}
+.footer{
+  text-align:center;
+  color:#7f8ba3;
+  margin-top:30px;
+  font-size:13px;
+}
+button{
+  background:#2563eb;
+  color:white;
+  border:0;
+  border-radius:10px;
+  padding:12px 20px;
+  font-size:16px;
 }
 </style>
-
 </head>
 
 <body>
 
-<div class="box">
+<div class="container">
 
 <h1>Crypto Fund AI</h1>
-
-<p>
-اپلیکیشن تحلیل صندوق ارز دیجیتال
-</p>
-
-<p id="status">
-برنامه آماده اجرا است
-</p>
-
+<div class="subtitle">
+سیستم هوشمند تحلیل و رتبه‌بندی بازار ارز دیجیتال
 </div>
 
-<script>
-document.getElementById("status").innerHTML =
-"Crypto Fund AI فعال شد";
-</script>
+<div class="status">
+🟢 سیستم فعال است — نسخه آزمایشی داشبورد
+</div>
+
+<div class="section">
+<h2>نمای کلی بازار</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Bitcoin</h3>
+<div class="value blue">BTC</div>
+<p>روند بازار: در حال بررسی</p>
+</div>
+
+<div class="card">
+<h3>Ethereum</h3>
+<div class="value blue">ETH</div>
+<p>روند بازار: در حال بررسی</p>
+</div>
+
+<div class="card">
+<h3>BTC Dominance</h3>
+<div class="value yellow">--</div>
+<p>منتظر داده بازار</p>
+</div>
+
+<div class="card">
+<h3>Fear & Greed</h3>
+<div class="value yellow">--</div>
+<p>منتظر داده بازار</p>
+</div>
+
+</div>
+</div>
+
+<div class="section">
+<h2>فیلتر فرصت‌های خرید</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>مومنتوم</h3>
+<div class="value green">فعال</div>
+<p>بررسی قدرت حرکت قیمت</p>
+</div>
+
+<div class="card">
+<h3>حجم معاملات</h3>
+<div class="value green">فعال</div>
+<p>بررسی افزایش غیرعادی حجم</p>
+</div>
+
+<div class="card">
+<h3>Whale Activity</h3>
+<div class="value green">فعال</div>
+<p>بررسی فعالیت سرمایه‌گذاران بزرگ</p>
+</div>
+
+<div class="card">
+<h3>Pre-Pump Scanner</h3>
+<div class="value green">فعال</div>
+<p>جستجوی فرصت‌های قبل از حرکت شدید</p>
+</div>
+
+</div>
+</div>
+
+<div class="section">
+<h2>۳ فرصت برتر</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>رتبه ۱</h3>
+<div class="value">---</div>
+<p>در انتظار تحلیل</p>
+</div>
+
+<div class="card">
+<h3>رتبه ۲</h3>
+<div class="value">---</div>
+<p>در انتظار تحلیل</p>
+</div>
+
+<div class="card">
+<h3>رتبه ۳</h3>
+<div class="value">---</div>
+<p>در انتظار تحلیل</p>
+</div>
+
+</div>
+</div>
+
+<div class="section" style="text-align:center;">
+<button onclick="alert('ماژول تحلیل بازار در مرحله بعد فعال می‌شود.')">
+اجرای تحلیل بازار
+</button>
+</div>
+
+<div class="footer">
+Crypto Fund AI — نسخه توسعه اولیه
+</div>
+
+</div>
 
 </body>
 </html>
