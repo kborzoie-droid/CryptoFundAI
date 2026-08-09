@@ -62,20 +62,8 @@ h1{
     margin:15px 0;
 }
 
-.green{
-    color:#35d07f;
-}
-
 .blue{
     color:#5da9ff;
-}
-
-.yellow{
-    color:#ffd166;
-}
-
-.error{
-    color:#ff6b6b;
 }
 
 .update{
@@ -114,22 +102,28 @@ h1{
 
 <div class="card">
 <h2>₿ Bitcoin</h2>
+
 <div id="btcPrice" class="price blue">
 در حال دریافت...
 </div>
+
 <div id="btcChange">
 در حال دریافت...
 </div>
+
 </div>
 
 <div class="card">
 <h2>♦ Ethereum</h2>
+
 <div id="ethPrice" class="price blue">
 در حال دریافت...
 </div>
+
 <div id="ethChange">
 در حال دریافت...
 </div>
+
 </div>
 
 </div>
@@ -140,11 +134,10 @@ h1{
 </div>
 
 <div class="footer">
-Crypto Fund AI — مرحله ۳
+Crypto Fund AI — مرحله ۴
 </div>
 
 </div>
-
 
 <script>
 
@@ -168,51 +161,23 @@ async function getCryptoPrices(){
         const btcChange = data.bitcoin.usd_24h_change;
         const ethChange = data.ethereum.usd_24h_change;
 
-      }
-
-    catch(error){
-
-        document.getElementById("btcPrice").innerHTML =
-            "خطا در دریافت";
-
-        document.getElementById("ethPrice").innerHTML =
-            "خطا در دریافت";
-
-        document.getElementById("btcChange").innerHTML =
-            "اتصال به API برقرار نشد";
-
-        document.getElementById("ethChange").innerHTML =
-            "اتصال به API برقرار نشد";
- 
-            throw new Error("API Error");
-        }
-
-        const data = await response.json();
-
-        const btcPrice = data.bitcoin.usd;
-        const ethPrice = data.ethereum.usd;
-
-        const btcChange = data.bitcoin.usd_24h_change;
-        const ethChange = data.ethereum.usd_24h_change;
-
         document.getElementById("btcPrice").innerHTML =
             "$" + btcPrice.toLocaleString();
 
         document.getElementById("ethPrice").innerHTML =
-         "$" + ethPrice.toLocaleString();                
-          document.getElementById("btcChange").innerHTML =
-    "تغییر ۲۴ ساعت: " + btcChange.toFixed(2) + "%";
+            "$" + ethPrice.toLocaleString();
 
-document.getElementById("ethChange").innerHTML =
-    "تغییر ۲۴ ساعت: " + ethChange.toFixed(2) + "%";
+        document.getElementById("btcChange").innerHTML =
+            "تغییر ۲۴ ساعت: " + btcChange.toFixed(2) + "%";
 
-document.getElementById("btcChange").style.color =
-    btcChange >= 0 ? "#35d07f" : "#ff6b6b";
+        document.getElementById("ethChange").innerHTML =
+            "تغییر ۲۴ ساعت: " + ethChange.toFixed(2) + "%";
 
-document.getElementById("ethChange").style.color =
-    ethChange >= 0 ? "#35d07f" : "#ff6b6b";
-       
-           
+        document.getElementById("btcChange").style.color =
+            btcChange >= 0 ? "#35d07f" : "#ff6b6b";
+
+        document.getElementById("ethChange").style.color =
+            ethChange >= 0 ? "#35d07f" : "#ff6b6b";
 
         document.getElementById("lastUpdate").innerHTML =
             new Date().toLocaleTimeString("fa-IR");
@@ -233,21 +198,8 @@ document.getElementById("ethChange").style.color =
         document.getElementById("ethChange").innerHTML =
             "اتصال به API برقرار نشد";
     }
+
 }
-
-
-getCryptoPrices();
-
-setInterval(getCryptoPrices,60000);
-
-</script>
-
-</body>
-</html>
-
-    }
-}
-
 
 getCryptoPrices();
 
