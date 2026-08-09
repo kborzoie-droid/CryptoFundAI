@@ -2,43 +2,210 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Crypto Fund AI</title>
+
 <style>
-body{background:#0b1020;color:white;font-family:Arial;text-align:center;padding:20px}
-.card{background:#121a2b;padding:20px;margin:15px auto;border-radius:15px;max-width:400px}
-.price{font-size:28px;color:#5da9ff}
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#0b1020;
+    color:white;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#aab3c5;
+    margin-bottom:25px;
+}
+
+.status{
+    background:#132238;
+    border:1px solid #24405f;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+.card{
+    background:#121a2b;
+    border:1px solid #25334d;
+    border-radius:14px;
+    padding:20px;
+}
+
+.card h2{
+    margin-top:0;
+}
+
+.price{
+    font-size:28px;
+    font-weight:bold;
+    margin:15px 0;
+}
+
+.green{
+    color:#35d07f;
+}
+
+.blue{
+    color:#5da9ff;
+}
+
+.yellow{
+    color:#ffd166;
+}
+
+.error{
+    color:#ff6b6b;
+}
+
+.update{
+    text-align:center;
+    color:#8d99ae;
+    margin-top:20px;
+    font-size:13px;
+}
+
+.footer{
+    text-align:center;
+    color:#7f8ba3;
+    margin-top:30px;
+    font-size:13px;
+}
 </style>
 </head>
 
 <body>
 
+<div class="container">
+
 <h1>Crypto Fund AI</h1>
-<p>📊 قیمت لحظه‌ای بازار</p>
+
+<div class="subtitle">
+سیستم هوشمند تحلیل بازار ارز دیجیتال
+</div>
+
+<div class="status">
+🟢 سیستم فعال است
+</div>
+
+<h2>📊 قیمت لحظه‌ای بازار</h2>
+
+<div class="grid">
 
 <div class="card">
 <h2>₿ Bitcoin</h2>
-<div id="btc" class="price">در حال دریافت...</div>
+<div id="btcPrice" class="price blue">
+در حال دریافت...
+</div>
+<div id="btcChange">
+در حال دریافت...
+</div>
 </div>
 
 <div class="card">
 <h2>♦ Ethereum</h2>
-<div id="eth" class="price">در حال دریافت...</div>
+<div id="ethPrice" class="price blue">
+در حال دریافت...
+</div>
+<div id="ethChange">
+در حال دریافت...
+</div>
 </div>
 
-<p id="status">در حال اتصال به بازار...</p>
+</div>
+
+<div class="update">
+آخرین بروزرسانی:
+<span id="lastUpdate">در حال دریافت...</span>
+</div>
+
+<div class="footer">
+Crypto Fund AI — مرحله ۳
+</div>
+
+</div>
+
 
 <script>
-fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd")
-.then(r=>r.json())
-.then(d=>{
-document.getElementById("btc").innerText="$"+d.bitcoin.usd.toLocaleString();
-document.getElementById("eth").innerText="$"+d.ethereum.usd.toLocaleString();
-document.getElementById("status").innerText="🟢 اتصال برقرار است";
-})
-.catch(()=>{
-document.getElementById("status").innerText="🔴 خطا در اتصال";
-});
+
+async function getCryptoPrices(){
+
+    try{
+
+        const response = await fetch(
+            "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true"
+        );
+
+        if(!response.ok){
+            throw new Error("API Error");
+        }
+
+        const data = await response.json();
+
+        const btcPrice = data.bitcoin.usd;
+        const ethPrice = data.ethereum.usd;
+
+        const btcChange = data.bitcoin.usd_24h_change;
+        const ethChange = data.ethereum.usd_24h_change;
+
+        document.getElementById("btcPrice").innerHTML =
+            "$" + btcPrice.toLocaleString();
+
+        document.getElementById("ethPrice").innerHTML =
+            "$" + ethPrice.toLocaleString();
+
+        document.getElementById("btcChange").innerHTML =
+            "تغییر ۲۴ ساعت: " + btcChange.toFixed(2) + "%";
+
+        document.getElementById("ethChange").innerHTML =
+            "تغییر ۲۴ ساعت: " + ethChange.toFixed(2) + "%";
+
+        document.getElementById("lastUpdate").innerHTML =
+            new Date().toLocaleTimeString("fa-IR");
+
+    }
+
+    catch(error){
+
+        document.getElementById("btcPrice").innerHTML =
+            "خطا در دریافت";
+
+        document.getElementById("ethPrice").innerHTML =
+            "خطا در دریافت";
+
+        document.getElementById("btcChange").innerHTML =
+            "اتصال به API برقرار نشد";
+
+        document.getElementById("ethChange").innerHTML =
+            "اتصال به API برقرار نشد";
+    }
+}
+
+
+getCryptoPrices();
+
+setInterval(getCryptoPrices,60000);
+
 </script>
 
 </body>
