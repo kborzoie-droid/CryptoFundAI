@@ -132,7 +132,22 @@ h1{
 آخرین بروزرسانی:
 <span id="lastUpdate">در حال دریافت...</span>
 </div>
+<div class="card" style="margin-top:20px;">
+    <h2>🔎 اسکن آلت‌کوین‌ها</h2>
 
+    <p>
+        پیدا کردن ارزهایی با مومنتوم و شرایط بازار مناسب
+    </p>
+
+    <button onclick="scanAltcoins()"
+        style="padding:12px 20px;border:none;border-radius:10px;cursor:pointer;">
+        شروع اسکن بازار
+    </button>
+
+    <div id="scanResult" style="margin-top:15px;">
+        آماده اسکن...
+    </div>
+</div>
 <div class="footer">
 Crypto Fund AI — مرحله ۴
 </div>
@@ -200,7 +215,67 @@ async function getCryptoPrices(){
     }
 
 }
+async function scanAltcoins(){
 
+    const result = document.getElementById("scanResult");
+
+    result.innerHTML = "🔄 در حال اسکن بازار...";
+
+    try{
+
+        const response = await fetch(
+            "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=volume_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h,7d,30d"
+        );
+
+        if(!response.ok){
+            throw new Error("Scan API Error");
+        }
+
+        const coins = await response.json();
+
+        const candidates = coins
+            .filter(coin => coin.symbol !== "btc" && coin.symbol !== "eth")
+            .filter(coin => coin.market_cap > 0)
+            .filter(coin => coin.total_volume > 0)
+            .sort((a,b) =>
+                (b.price_change_percentage_30d_in_currency || 0) -
+                (a.price_change_percentage_30d_in_currency || 0)
+            )
+            .slice(0,10);
+
+        let html = "<h3>🏆 آلت‌کوین‌های برتر</h3>";
+
+        candidates.forEach((coin,index) => {
+
+            const change30 =
+                coin.price_change_percentage_30d_in_currency || 0;
+
+            html += `
+                <div style="padding:10px 0;border-bottom:1px solid #25334d;">
+                    <strong>${index + 1}. ${coin.name}</strong>
+                    <br>
+                    قیمت: $${coin.current_price.toLocaleString()}
+                    <br>
+                    تغییر ۳۰ روزه:
+                    <span style="color:${change30 >= 0 ? "#35d07f" : "#ff6b6b"}">
+                        ${change30.toFixed(2)}%
+                    </span>
+                </div>
+            `;
+        });
+
+        result.innerHTML = html;
+
+    }
+
+    catch(error){
+
+        result.innerHTML =
+            "❌ خطا در دریافت اطلاعات بازار";
+
+    }
+
+}
 getCryptoPrices();
 
 setInterval(getCryptoPrices,60000);
