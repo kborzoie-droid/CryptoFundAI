@@ -168,17 +168,51 @@ async function getCryptoPrices(){
         const btcChange = data.bitcoin.usd_24h_change;
         const ethChange = data.ethereum.usd_24h_change;
 
+      }
+
+    catch(error){
+
+        document.getElementById("btcPrice").innerHTML =
+            "خطا در دریافت";
+
+        document.getElementById("ethPrice").innerHTML =
+            "خطا در دریافت";
+
+        document.getElementById("btcChange").innerHTML =
+            "اتصال به API برقرار نشد";
+
+        document.getElementById("ethChange").innerHTML =
+            "اتصال به API برقرار نشد";
+ 
+            throw new Error("API Error");
+        }
+
+        const data = await response.json();
+
+        const btcPrice = data.bitcoin.usd;
+        const ethPrice = data.ethereum.usd;
+
+        const btcChange = data.bitcoin.usd_24h_change;
+        const ethChange = data.ethereum.usd_24h_change;
+
         document.getElementById("btcPrice").innerHTML =
             "$" + btcPrice.toLocaleString();
 
         document.getElementById("ethPrice").innerHTML =
-            "$" + ethPrice.toLocaleString();
+         "$" + ethPrice.toLocaleString();                
+          document.getElementById("btcChange").innerHTML =
+    "تغییر ۲۴ ساعت: " + btcChange.toFixed(2) + "%";
 
-        document.getElementById("btcChange").innerHTML =
-            "تغییر ۲۴ ساعت: " + btcChange.toFixed(2) + "%";
+document.getElementById("ethChange").innerHTML =
+    "تغییر ۲۴ ساعت: " + ethChange.toFixed(2) + "%";
 
-        document.getElementById("ethChange").innerHTML =
-            "تغییر ۲۴ ساعت: " + ethChange.toFixed(2) + "%";
+document.getElementById("btcChange").style.color =
+    btcChange >= 0 ? "#35d07f" : "#ff6b6b";
+
+document.getElementById("ethChange").style.color =
+    ethChange >= 0 ? "#35d07f" : "#ff6b6b";
+       
+           
 
         document.getElementById("lastUpdate").innerHTML =
             new Date().toLocaleTimeString("fa-IR");
@@ -198,6 +232,19 @@ async function getCryptoPrices(){
 
         document.getElementById("ethChange").innerHTML =
             "اتصال به API برقرار نشد";
+    }
+}
+
+
+getCryptoPrices();
+
+setInterval(getCryptoPrices,60000);
+
+</script>
+
+</body>
+</html>
+
     }
 }
 
