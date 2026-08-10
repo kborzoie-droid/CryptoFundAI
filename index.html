@@ -257,8 +257,15 @@ async function scanAltcoins(){
                     coin.price_change_percentage_30d_in_currency || 0;
 
                 const volume =
-                    coin.total_volume || 0;     
-                let score = 0;
+                  coin.total_volume || 0;   // فیلتر رشد غیرعادی
+if(change30 > 150){
+    return null;
+}
+
+if(change7 > 150){
+    return null;
+} 
+                let score = 0;   
 
 // مومنتوم کوتاه‌مدت
 if(change24 > 0) score += 10;
