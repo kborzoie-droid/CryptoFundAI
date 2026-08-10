@@ -238,7 +238,15 @@ async function scanAltcoins(){
             .filter(coin =>
                 coin.symbol !== "btc" &&
                 coin.symbol !== "eth"
-            )
+            ) .filter(coin => {
+    const change7 =
+        coin.price_change_percentage_7d_in_currency || 0;
+
+    const change30 =
+        coin.price_change_percentage_30d_in_currency || 0;
+
+    return change7 <= 150 && change30 <= 150;
+})
             .filter(coin =>
                 coin.market_cap > 10000000
             )
@@ -257,14 +265,7 @@ async function scanAltcoins(){
                     coin.price_change_percentage_30d_in_currency || 0;
 
                 const volume =
-                  coin.total_volume || 0;   // فیلتر رشد غیرعادی
-if(change30 > 150){
-    return null;
-}
-
-if(change7 > 150){
-    return null;
-} 
+                  coin.total_volume || 0;  
                 let score = 0;   
 
 // مومنتوم کوتاه‌مدت
