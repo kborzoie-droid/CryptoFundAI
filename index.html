@@ -153,16 +153,15 @@ Crypto Fund AI — مرحله ۴
 </div>
 
 </div>
-
 <script>
 
 async function getCryptoPrices(){
 
     try{
 
-     const response = await fetch(
-    "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true"
-);  
+        const response = await fetch(
+            "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true"
+        );
 
         if(!response.ok){
             throw new Error("API Error");
@@ -212,7 +211,11 @@ async function getCryptoPrices(){
 
         document.getElementById("ethChange").innerHTML =
             "اتصال به API برقرار نشد";
-    
+    }
+
+}
+
+
 async function scanAltcoins(){
 
     const result = document.getElementById("scanResult");
@@ -342,6 +345,7 @@ async function scanAltcoins(){
 
                     حجم معاملات:
                     $${coin.total_volume.toLocaleString()}
+
                 </div>
             `;
 
@@ -359,6 +363,8 @@ async function scanAltcoins(){
     }
 
 }
+
+
 getCryptoPrices();
 
 setInterval(getCryptoPrices,60000);
