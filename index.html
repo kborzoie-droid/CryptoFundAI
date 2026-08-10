@@ -257,23 +257,28 @@ async function scanAltcoins(){
                     coin.price_change_percentage_30d_in_currency || 0;
 
                 const volume =
-                    coin.total_volume || 0;
-
+                    coin.total_volume || 0;     
                 let score = 0;
 
-                if(change24 > 0) score += 10;
-                if(change24 > 5) score += 5;
+// مومنتوم کوتاه‌مدت
+if(change24 > 0) score += 10;
+if(change24 >= 2 && change24 <= 8) score += 10;
 
-                if(change7 > 0) score += 15;
-                if(change7 > 10) score += 10;
+// مومنتوم هفتگی
+if(change7 > 5) score += 10;
+if(change7 >= 10 && change7 <= 40) score += 15;
 
-                if(change30 > 0) score += 15;
-                if(change30 > 20) score += 10;
-                if(change30 > 50) score += 10;
+// رشد ماهانه سالم
+if(change30 > 10) score += 10;
+if(change30 >= 20 && change30 <= 80) score += 15;
 
-                if(volume > 10000000) score += 10;
-                if(volume > 50000000) score += 5;
+// حجم معاملات
+if(volume > 10000000) score += 10;
+if(volume > 50000000) score += 10;
 
+// جلوگیری از امتیازدهی بیش از حد به پامپ‌های شدید
+if(change30 > 150) score -= 20;
+if(change7 > 100) score -= 15;
                 let level = "ضعیف";
                 let color = "#ff6b6b";
 
