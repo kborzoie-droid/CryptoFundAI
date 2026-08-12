@@ -235,10 +235,7 @@ async function scanAltcoins(){
         const coins = await response.json();
 
         const candidates = coins
-            .filter(coin =>
-                coin.symbol !== "btc" &&
-                coin.symbol !== "eth"
-            ) .filter(coin => {
+    .filter(coin => {
     const change7 =
         coin.price_change_percentage_7d_in_currency || 0;
 
