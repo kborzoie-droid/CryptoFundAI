@@ -155,7 +155,49 @@ Crypto Fund AI — مرحله ۴
 </div>
 <script>
 
+async function getCryptoPrices(){
 
+    try{
+
+        const response = await fetch(
+            "https://winter-feather-0bc1.roya302761.workers.dev/api/price"
+        );
+
+        if(!response.ok){
+            throw new Error("Price API Error");
+        }
+
+        const data = await response.json();
+
+        document.getElementById("btcPrice").innerText =
+            "$" + data.bitcoin.usd.toLocaleString();
+
+        document.getElementById("ethPrice").innerText =
+            "$" + data.ethereum.usd.toLocaleString();
+
+        document.getElementById("btcChange").innerText =
+            "24h: " + data.bitcoin.usd_24h_change.toFixed(2) + "%";
+
+        document.getElementById("ethChange").innerText =
+            "24h: " + data.ethereum.usd_24h_change.toFixed(2) + "%";
+
+        document.getElementById("lastUpdate").innerText =
+            new Date().toLocaleTimeString("fa-IR");
+
+    }
+    catch(error){
+
+        document.getElementById("btcPrice").innerText =
+            "خطا در دریافت قیمت";
+
+        document.getElementById("ethPrice").innerText =
+            "خطا در دریافت قیمت";
+
+        console.error(error);
+
+    }
+
+}
 
 
 async function scanAltcoins(){
