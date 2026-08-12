@@ -320,8 +320,67 @@ if(change7 > 100) score -= 15;
 
             })
             .sort((a,b) => b.score - a.score)
-            .slice(0,10);
+           .slice(0,20); 
+for(const coin of candidates){
 
+    try{
+
+        const historyResponse = await fetch(
+            `https://api.coingecko.com/api/v3/coins/${coin.id}/market_chart?vs_currency=usd&days=1&interval=hourly`
+        );
+
+        if(!historyResponse.ok){
+            continue;
+        }
+
+        const historyData = await historyResponse.json();
+
+        const volumes =
+            historyData.total_volumes || [];
+
+        if(volumes.length < 5){
+            continue;
+        }
+
+        const previousVolumes =
+            volumes.slice(0,-1).map(item => item[1]);
+
+        const averageVolume =
+            previousVolumes.reduce(
+                (sum,value) => sum + value,
+                0
+            ) / previousVolumes.length;
+
+        const currentHistoricalVolume =
+            volumes[volumes.length - 1][1];
+
+        const volumeSurge =
+            averageVolume > 0
+                ? currentHistoricalVolume / averageVolume
+                : 0;
+
+        coin.volumeSurge = volumeSurge;
+
+        if(volumeSurge >= 2){
+            coin.score += 10;
+        }
+
+        if(volumeSurge >= 3){
+            coin.score += 10;
+        }
+
+        if(volumeSurge >= 5){
+            coin.score += 10;
+        }
+
+    }
+    catch(error){
+
+        coin.volumeSurge = 0;
+
+    }
+
+}
         let html = "<h3>🏆 بهترین کاندیداها</h3>";
 
         candidates.forEach((coin,index) => {
