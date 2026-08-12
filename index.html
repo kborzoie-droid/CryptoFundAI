@@ -369,7 +369,48 @@ for(const coin of candidates){
         if(volumeSurge >= 5){
             coin.score += 10;
         }
+// شتاب قیمت در 24 ساعت
+const prices =
+    historyData.prices || [];
 
+if(prices.length >= 6){
+
+    const recentPrices =
+        prices.slice(-6).map(item => item[1]);
+
+    const oldPrice =
+        recentPrices[0];
+
+    const currentPrice =
+        recentPrices[recentPrices.length - 1];
+
+    const priceAcceleration =
+        oldPrice > 0
+            ? ((currentPrice - oldPrice) / oldPrice) * 100
+            : 0;
+
+    coin.priceAcceleration =
+        priceAcceleration;
+
+    // شتاب مثبت کوتاه‌مدت
+    if(priceAcceleration >= 1){
+        coin.score += 5;
+    }
+
+    if(priceAcceleration >= 3){
+        coin.score += 5;
+    }
+
+    if(priceAcceleration >= 5){
+        coin.score += 10;
+    }
+
+}
+else{
+
+    coin.priceAcceleration = 0;
+
+}
     }
     catch(error){
 
