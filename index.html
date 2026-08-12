@@ -355,7 +355,44 @@ for(const coin of candidates){
             averageVolume > 0
                 ? currentHistoricalVolume / averageVolume
                 : 0;
+// شتاب قیمت کوتاه‌مدت
+const prices = historyData.prices || [];
 
+if (prices.length >= 6) {
+
+    const recentPrice =
+        prices[prices.length - 1][1];
+
+    const price6hAgo =
+        prices[prices.length - 7][1];
+
+    const price3hAgo =
+        prices[prices.length - 4][1];
+
+    const change6h =
+        price6hAgo > 0
+            ? ((recentPrice - price6hAgo) / price6hAgo) * 100
+            : 0;
+
+    const change3h =
+        price3hAgo > 0
+            ? ((recentPrice - price3hAgo) / price3hAgo) * 100
+            : 0;
+
+    const acceleration =
+        change3h - (change6h / 2);
+
+    coin.priceAcceleration = acceleration;
+
+    if (acceleration >= 1) {
+        coin.score += 5;
+    }
+
+    if (acceleration >= 2) {
+        coin.score += 5;
+    }
+
+}
         coin.volumeSurge = volumeSurge;
 
         if(volumeSurge >= 2){
