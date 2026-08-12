@@ -380,7 +380,28 @@ for(const coin of candidates){
 
     }
 
-}
+}  candidates.forEach(coin => {
+
+    if(coin.score > 100){
+        coin.score = 100;
+    }
+
+    if(coin.score >= 70){
+        coin.level = "🟢 کاندیدای قوی";
+        coin.color = "#35d07f";
+    }
+    else if(coin.score >= 40){
+        coin.level = "🟡 قابل بررسی";
+        coin.color = "#ffd166";
+    }
+    else{
+        coin.level = "🔴 ضعیف";
+        coin.color = "#ff6b6b";
+    }
+
+});
+
+candidates.sort((a,b) => b.score - a.score);
         let html = "<h3>🏆 بهترین کاندیداها</h3>";
 
         candidates.forEach((coin,index) => {
